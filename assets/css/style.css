@@ -331,9 +331,9 @@ main {
   gap: 15px;
 }
 
-.avatar-box {
+figure .avatar-box {
   background: var(--bg-gradient-onyx);
-  border-radius: 0px;
+  border-radius: 50px;
 	
 }
 .avatar-box .img {
