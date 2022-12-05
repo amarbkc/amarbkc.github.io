@@ -808,7 +808,7 @@ figure .avatar-box {
   font-weight: var(--fw-300);
   line-height: 1.6;
 }
-.collegeskill{ var(--light-gray);
+.collegeskill{color: var(--light-gray);
   font-weight: var(--fw-300);
   line-height: 1.6;
 }
