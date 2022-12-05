@@ -336,6 +336,9 @@ main {
   border-radius: 30px;
 	
 }
+.avatar-box .img {
+	border-radius:30px
+}
 
 .info-content .name {
   color: var(--white-2);
