@@ -1,0 +1,53 @@
+{%- comment -%}
+  Education / experience / skills / publications from _data/profile.yml.
+  Shared by the About and CV pages so facts are edited in one place.
+  Usage: {% include profile-sections.html heading="h2" %}
+{%- endcomment -%}
+{%- assign profile = site.data.profile %}
+
+<h2 id="education">Education</h2>
+{%- for e in profile.education %}
+<div class="cv-entry">
+  <div class="cv-entry__head">
+    <h3 class="cv-entry__title">{{ e.degree }}</h3>
+    <span class="cv-entry__dates">{{ e.dates }}</span>
+  </div>
+  <p class="cv-entry__org">{{ e.institution }}{% if e.location %}, {{ e.location }}{% endif %}</p>
+  {%- if e.details %}
+  <ul>{% for d in e.details %}<li>{{ d }}</li>{% endfor %}</ul>
+  {%- endif %}
+</div>
+{%- endfor %}
+
+<h2 id="experience">Research and experience</h2>
+{%- for x in profile.experience %}
+<div class="cv-entry">
+  <div class="cv-entry__head">
+    <h3 class="cv-entry__title">{{ x.role }}</h3>
+    <span class="cv-entry__dates">{{ x.dates }}</span>
+  </div>
+  <p class="cv-entry__org">{{ x.organization }}</p>
+  {%- if x.details %}
+  <ul>{% for d in x.details %}<li>{{ d }}</li>{% endfor %}</ul>
+  {%- endif %}
+</div>
+{%- endfor %}
+
+{%- if profile.publications.size > 0 %}
+<h2 id="publications">Publications</h2>
+<ul>
+  {%- for pub in profile.publications %}
+  <li>{{ pub.authors }}. {% if pub.url %}<a href="{{ pub.url }}">{{ pub.title }}</a>{% else %}{{ pub.title }}{% endif %}. <em>{{ pub.venue }}</em>.</li>
+  {%- endfor %}
+</ul>
+{%- endif %}
+
+<h2 id="skills">Skills</h2>
+{%- unless profile.skills_reviewed %}
+<div class="notice notice--todo no-print"><p><strong>Please review:</strong> this is a starter list. Edit <code>skills</code> in <code>_data/profile.yml</code> and set <code>skills_reviewed: true</code> to remove this note.</p></div>
+{%- endunless %}
+<dl class="skills">
+  {%- for s in profile.skills %}
+  <div><dt>{{ s.group }}</dt><dd>{{ s.items | join: ", " }}</dd></div>
+  {%- endfor %}
+</dl>

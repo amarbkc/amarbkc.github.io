@@ -1,0 +1,45 @@
+---
+layout: default
+---
+<article class="container container--narrow article">
+  {% include breadcrumbs.html parent_title="Projects" parent_url="/projects/" %}
+
+  <header class="article-header">
+    <p class="article-eyebrow">{{ page.category | default: "Project" }}</p>
+    <h1 class="article-title">{{ page.title }}</h1>
+    {%- if page.description %}<p class="article-summary">{{ page.description }}</p>{% endif %}
+
+    <dl class="project-facts">
+      {%- if page.technologies %}
+      <div><dt>Built with</dt><dd>{{ page.technologies | join: ", " }}</dd></div>
+      {%- endif %}
+      {%- if page.status %}
+      <div><dt>Status</dt><dd><span class="status status--{{ page.status | slugify }}">{{ page.status }}</span></dd></div>
+      {%- endif %}
+      {%- if page.github_url and page.github_url != "" %}
+      <div><dt>Source</dt><dd><a href="{{ page.github_url }}">{{ page.github_url | remove: "https://" }}</a></dd></div>
+      {%- endif %}
+      {%- if page.demo_url and page.demo_url != "" %}
+      <div><dt>Demo</dt><dd><a href="{{ page.demo_url }}">View demo</a></dd></div>
+      {%- endif %}
+    </dl>
+  </header>
+
+  <div class="prose">
+    {{ content }}
+  </div>
+
+  {%- comment -%} Posts that list this project in `related_projects`. {%- endcomment %}
+  {%- assign slug = page.url | split: "/" | last %}
+  {%- assign writing = site.posts | where_exp: "p", "p.related_projects contains slug" %}
+  {%- if writing.size > 0 %}
+  <aside class="related" aria-labelledby="related-writing-heading">
+    <h2 id="related-writing-heading" class="related__title">Related writing</h2>
+    <div class="post-list post-list--compact">
+      {%- for p in writing limit: 4 %}{% include post-card.html post=p excerpt=false %}{% endfor %}
+    </div>
+  </aside>
+  {%- endif %}
+
+  <p class="back-link"><a href="{{ '/projects/' | relative_url }}">← All projects</a></p>
+</article>

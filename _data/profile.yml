@@ -1,0 +1,50 @@
+# =============================================================================
+#  Structured background used by the About page and the CV page.
+#  Edit facts here once; both pages update. Remove or add items freely.
+#  Only real, verifiable information belongs here.
+# =============================================================================
+
+research_interests:
+  - Machine learning and deep learning
+  - Mathematical optimization
+  - Statistical learning and learning theory
+  - Algorithms and data structures
+  - Computational geometry
+  - Mathematics underlying learning algorithms
+
+education:
+  - degree: "B.S. in Computer Science, Minor in Mathematics"
+    institution: "Howard University"
+    location: "Washington, DC"
+    dates: "Graduated May 2026"
+    details:
+      - "GPA: 3.83 / 4.00"
+
+experience:
+  - role: "Research Fellow"
+    organization: "MIT Summer Geometry Initiative (SGI)"
+    dates: "July – August 2025"
+    details:
+      - "Voronoi-based adaptive particle splitting for fluid simulations."
+      - "Geodesic distances on surfaces via quasi-harmonic PDEs."
+      - "Algorithms for convex surface reconstruction."
+
+# Skills: group name → list.
+# ⚠ STARTER LIST — only items implied by the projects on this site. Replace
+# with what you actually use, then set `skills_reviewed: true` to remove the
+# "please review" notice shown on the About and CV pages.
+skills_reviewed: false
+skills:
+  - group: Programming
+    items: [Python, NumPy]
+  - group: Mathematics
+    items: [Linear algebra, Probability and statistics, Calculus, Optimization]
+  - group: Tools
+    items: [Git, LaTeX]
+
+# Publications: intentionally empty. Add entries only when they exist, e.g.
+#   - title: "Paper title"
+#     authors: "A. KC, B. Coauthor"
+#     venue: "Venue, Year"
+#     url: "https://..."
+publications: []

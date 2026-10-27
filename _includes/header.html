@@ -1,0 +1,31 @@
+{%- comment -%} Active state: a nav item is current when the page URL starts with its URL. {%- endcomment -%}
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="nav-toggle__bar" aria-hidden="true"></span>
+      <span class="visually-hidden">Menu</span>
+    </button>
+
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul class="site-nav__list">
+        {%- for item in site.data.navigation.main %}
+          {%- assign current = false %}
+          {%- if page.url == item.url %}{% assign current = "page" %}
+          {%- elsif page.url contains item.url %}{% assign current = "true" %}
+          {%- endif %}
+          {%- if item.url == "/projects/" and page.collection == "projects" %}{% assign current = "true" %}{% endif %}
+          {%- if item.url == "/blog/" and page.layout == "post" %}{% assign current = "true" %}{% endif %}
+        <li>
+          <a class="site-nav__link" href="{{ item.url | relative_url }}"{% if current %} aria-current="{{ current }}"{% endif %}>{{ item.title }}</a>
+        </li>
+        {%- endfor %}
+      </ul>
+      <button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="icon icon--sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"/></svg>
+        <svg class="icon icon--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>

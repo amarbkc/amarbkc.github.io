@@ -1,0 +1,37 @@
+---
+layout: default
+title: Blog
+description: Long-form notes on algorithms, mathematics, machine learning, and computer science.
+permalink: /blog/
+---
+<div class="container container--narrow">
+  <header class="page-header">
+    <h1 class="page-title">Writing</h1>
+    <p class="page-lead">Long-form notes on algorithms, mathematics, and machine learning — derivations, proofs of correctness, and implementations.</p>
+    <p class="article-meta"><a href="{{ '/blog/topics/' | relative_url }}">Browse by topic</a> <span aria-hidden="true">·</span> <a href="{{ '/feed.xml' | relative_url }}">RSS feed</a></p>
+  </header>
+
+  {%- comment -%} Search is revealed by main.js; without JS the full list is shown. {%- endcomment %}
+  <div class="search" data-search="{{ '/search.json' | relative_url }}" role="search" hidden>
+    <label class="search__label" for="search-input">Search posts</label>
+    <input class="search__input" id="search-input" type="search" placeholder="e.g. gradient, union-find, complexity" autocomplete="off">
+    <p class="search__status" aria-live="polite"></p>
+  </div>
+
+  <div class="post-list" data-search-results hidden></div>
+
+  <div data-post-listing>
+    {%- if site.posts.size == 0 %}
+    <div class="empty-state"><p>No posts yet. Add a Markdown file to <code>_posts/</code>.</p></div>
+    {%- endif %}
+    {%- assign by_year = site.posts | group_by_exp: "p", "p.date | date: '%Y'" %}
+    {%- for year in by_year %}
+    <section class="year-group" aria-labelledby="year-{{ year.name }}">
+      <h2 class="year-group__title" id="year-{{ year.name }}">{{ year.name }}</h2>
+      <div class="post-list">
+        {%- for post in year.items %}{% include post-card.html post=post %}{% endfor %}
+      </div>
+    </section>
+    {%- endfor %}
+  </div>
+</div>

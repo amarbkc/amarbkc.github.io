@@ -1,0 +1,23 @@
+{%- comment -%}
+  MathJax 3 for LaTeX. Loaded only on pages with `math: true` (the default for
+  posts and projects). If the CDN is unreachable, the raw LaTeX stays readable.
+
+  Supported delimiters:
+    inline:  $...$   \(...\)   $$...$$ inside a sentence
+    display: $$...$$ on its own lines, or \[...\]
+{%- endcomment %}
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [["$", "$"], ["\\(", "\\)"]],
+      displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+      processEscapes: true,
+      tags: "ams"
+    },
+    options: {
+      skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+    },
+    chtml: { displayOverflow: "linebreak" }
+  };
+</script>
+<script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>

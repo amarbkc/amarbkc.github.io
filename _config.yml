@@ -1,0 +1,119 @@
+# =============================================================================
+#  Site configuration — the ONE place for your personal details and settings.
+#
+#  After editing this file, restart `bundle exec jekyll serve`
+#  (Jekyll does not reload _config.yml automatically).
+#
+#  Values left as "" are treated as "not set" and the matching link/section is
+#  hidden or shown as a clearly marked placeholder. Nothing is invented.
+# =============================================================================
+
+# --- Identity ----------------------------------------------------------------
+title: "Amar KC"                     # Shown in the header and browser tab
+author:
+  name: "Amar KC"
+  # Short line shown under your name on the home page.
+  tagline: "Computer science graduate studying machine learning, algorithms, and the mathematics of learning."
+
+# Used for search engines and link previews (Open Graph / Twitter cards).
+description: >-
+  Personal website and technical notebook of Amar KC — implementations of
+  machine learning algorithms from first principles, notes on algorithms and
+  data structures, and the mathematics behind them.
+
+# Short subtitle used in the home page's browser-tab title.
+tagline: "Machine learning, algorithms, and mathematics"
+
+lang: en
+
+# --- Deployment --------------------------------------------------------------
+# `url` is the domain WITHOUT a trailing slash.
+#   User site (repo named USERNAME.github.io): url: "https://USERNAME.github.io", baseurl: ""
+#   Project site (any other repo name):        url: "https://USERNAME.github.io", baseurl: "/REPO-NAME"
+#   Custom domain later:                       url: "https://www.example.com",    baseurl: ""
+# The GitHub Actions workflow overrides `baseurl` automatically at deploy time,
+# so a wrong baseurl here only affects local previews.
+url: "https://amarbkc.github.io"     # ⚠ verify: username detected from your local git remotes
+baseurl: ""
+
+# --- Contact & profiles ------------------------------------------------------
+# Leave a value empty ("") to hide that link everywhere on the site.
+github_username: "amarbkc"           # ⚠ verify: detected from your local git remotes
+email: ""                            # e.g. "you@example.com" — shown publicly on the site
+linkedin_url: ""                     # full URL, e.g. "https://www.linkedin.com/in/your-handle/"
+scholar_url: ""                      # Google Scholar profile URL (optional)
+orcid_url: ""                        # ORCID URL (optional)
+
+# --- CV / résumé ---------------------------------------------------------------
+# Put your PDF in assets/cv/ and set the path below (relative to the site root).
+# While this is empty, the CV page shows a placeholder instead of a broken link.
+cv_pdf: ""                           # e.g. "/assets/cv/Amar_KC_CV.pdf"
+
+# --- Social preview image (optional) ------------------------------------------
+# A 1200×630 image used when links to your site are shared. Leave empty for none.
+og_image: ""                         # e.g. "/assets/images/og-default.png"
+
+# --- Home page -----------------------------------------------------------------
+home:
+  featured_projects: 3               # max projects with `featured: true` to show
+  recent_posts: 4                    # number of latest posts to show
+
+# =============================================================================
+#  Settings below rarely need to change.
+# =============================================================================
+
+permalink: /blog/:year/:month/:title/
+timezone: America/New_York
+
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
+defaults:
+  - scope: { path: "", type: posts }
+    values:
+      layout: post
+      math: true
+      comments: false
+  - scope: { path: "", type: projects }
+    values:
+      layout: project
+      math: true
+  - scope: { path: "" }
+    values:
+      layout: page
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  hard_wrap: false
+  math_engine: mathjax              # $$...$$ → MathJax delimiters
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+
+excerpt_separator: "<!--more-->"
+
+sass:
+  style: compressed
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+feed:
+  path: feed.xml
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .bundle/
+  - .jekyll-cache/
+  - node_modules/
+  - scripts/

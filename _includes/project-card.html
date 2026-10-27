@@ -1,0 +1,19 @@
+{%- comment -%} Usage: {% include project-card.html project=p %} {%- endcomment -%}
+{%- assign p = include.project -%}
+{%- assign cat = site.data.project_categories | where: "name", p.category | first -%}
+<article class="card project-card" data-category="{{ cat.slug | default: 'uncategorized' }}">
+  <p class="card__eyebrow">{{ p.category | default: "Project" }}</p>
+  <h3 class="card__title"><a class="card__link" href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+  <p class="card__text">{{ p.description }}</p>
+  <div class="card__footer">
+    {%- if p.technologies %}
+    <ul class="tag-list" aria-label="Technologies">
+      {%- for t in p.technologies %}<li class="tag">{{ t }}</li>{% endfor %}
+    </ul>
+    {%- endif %}
+    {%- if p.status %}<span class="status status--{{ p.status | slugify }}">{{ p.status }}</span>{% endif %}
+    {%- if p.github_url and p.github_url != "" %}
+    <a class="card__secondary" href="{{ p.github_url }}">Source<span class="visually-hidden"> code for {{ p.title }}</span></a>
+    {%- endif %}
+  </div>
+</article>

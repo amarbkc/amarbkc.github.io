@@ -1,0 +1,17 @@
+{%- comment -%}
+  Usage: {% include post-card.html post=post %}  (add excerpt=false to hide the summary)
+{%- endcomment -%}
+{%- assign post = include.post -%}
+<article class="post-item">
+  <div class="post-item__meta">
+    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+    {%- for c in post.categories limit: 1 %}
+    <span aria-hidden="true">·</span>
+    <a class="post-item__category" href="{{ '/blog/topics/' | relative_url }}#{{ c | slugify }}">{{ c }}</a>
+    {%- endfor %}
+  </div>
+  <h3 class="post-item__title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+  {%- unless include.excerpt == false %}
+  <p class="post-item__excerpt">{{ post.summary | default: post.excerpt | strip_html | normalize_whitespace | truncatewords: 40 }}</p>
+  {%- endunless %}
+</article>

@@ -1,0 +1,22 @@
+{%- comment -%}
+  Contact/profile links from _config.yml. Empty values are skipped.
+  Usage: {% include contact-links.html class="contact-list" %}
+{%- endcomment -%}
+<ul class="{{ include.class | default: 'contact-list' }}">
+  {%- if site.email != "" %}
+  <li><a href="mailto:{{ site.email }}">Email<span class="contact-list__detail"> · {{ site.email }}</span></a></li>
+  {%- endif %}
+  {%- if site.github_username != "" %}
+  <li><a href="https://github.com/{{ site.github_username }}" rel="me">GitHub<span class="contact-list__detail"> · @{{ site.github_username }}</span></a></li>
+  {%- endif %}
+  {%- if site.linkedin_url != "" %}
+  <li><a href="{{ site.linkedin_url }}" rel="me">LinkedIn</a></li>
+  {%- endif %}
+  {%- if site.scholar_url != "" %}
+  <li><a href="{{ site.scholar_url }}" rel="me">Google Scholar</a></li>
+  {%- endif %}
+  {%- if site.orcid_url != "" %}
+  <li><a href="{{ site.orcid_url }}" rel="me">ORCID</a></li>
+  {%- endif %}
+  <li><a href="{{ '/feed.xml' | relative_url }}">RSS feed</a></li>
+</ul>

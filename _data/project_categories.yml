@@ -1,0 +1,13 @@
+# Project categories, in display order. A project's `category` front matter
+# must match one of these `name` values exactly to be filterable.
+# Categories with no projects still appear and show an empty-state message.
+- name: Machine Learning
+  slug: machine-learning
+- name: Deep Learning
+  slug: deep-learning
+- name: Algorithms and Data Structures
+  slug: algorithms
+- name: Mathematics and Optimization
+  slug: math-optimization
+- name: Research and Experiments
+  slug: research

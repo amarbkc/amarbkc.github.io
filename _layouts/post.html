@@ -1,0 +1,88 @@
+---
+layout: default
+---
+<article class="container container--narrow article" itemscope itemtype="https://schema.org/BlogPosting">
+  {% include breadcrumbs.html parent_title="Blog" parent_url="/blog/" %}
+
+  <header class="article-header">
+    <h1 class="article-title" itemprop="headline">{{ page.title }}</h1>
+    {%- if page.summary %}<p class="article-summary">{{ page.summary }}</p>{% endif %}
+    <p class="article-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%B %-d, %Y" }}</time>
+      {%- if page.last_modified_at %}
+      <span aria-hidden="true">·</span> Updated <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date: "%B %-d, %Y" }}</time>
+      {%- endif %}
+      <span aria-hidden="true">·</span>
+      {%- assign words = content | strip_html | number_of_words %}
+      {{ words | divided_by: 200 | at_least: 1 }} min read
+    </p>
+    {%- if page.categories.size > 0 or page.tags.size > 0 %}
+    <ul class="tag-list tag-list--meta" aria-label="Categories and tags">
+      {%- for c in page.categories %}
+      <li><a class="tag tag--category" href="{{ '/blog/topics/' | relative_url }}#{{ c | slugify }}">{{ c }}</a></li>
+      {%- endfor %}
+      {%- for t in page.tags %}
+      <li><a class="tag" href="{{ '/blog/topics/' | relative_url }}#tag-{{ t | slugify }}">#{{ t }}</a></li>
+      {%- endfor %}
+    </ul>
+    {%- endif %}
+  </header>
+
+  <div class="prose" itemprop="articleBody">
+    {{ content }}
+  </div>
+
+  {%- comment -%} Related projects (front matter: related_projects: [neural-network-from-scratch]) {%- endcomment %}
+  {%- if page.related_projects %}
+  <aside class="related" aria-labelledby="related-projects-heading">
+    <h2 id="related-projects-heading" class="related__title">Related projects</h2>
+    <ul class="related__list">
+      {%- for slug in page.related_projects %}
+        {%- assign rp = site.projects | where_exp: "p", "p.url contains slug" | first %}
+        {%- if rp %}<li><a href="{{ rp.url | relative_url }}">{{ rp.title }}</a></li>{% endif %}
+      {%- endfor %}
+    </ul>
+  </aside>
+  {%- endif %}
+
+  {%- comment -%}
+    Related posts: posts sharing a category first, then posts sharing a tag (max 3).
+  {%- endcomment %}
+  {%- assign related = "" | split: "" %}
+  {%- for p in site.posts %}
+    {%- if p.url != page.url %}
+      {%- assign shared = false %}
+      {%- for c in p.categories %}{% if page.categories contains c %}{% assign shared = true %}{% endif %}{% endfor %}
+      {%- if shared %}{% assign related = related | push: p %}{% endif %}
+    {%- endif %}
+  {%- endfor %}
+  {%- for p in site.posts %}
+    {%- if p.url != page.url %}
+      {%- unless related contains p %}
+        {%- assign shared = false %}
+        {%- for t in p.tags %}{% if page.tags contains t %}{% assign shared = true %}{% endif %}{% endfor %}
+        {%- if shared %}{% assign related = related | push: p %}{% endif %}
+      {%- endunless %}
+    {%- endif %}
+  {%- endfor %}
+  {%- if related.size > 0 %}
+  <aside class="related" aria-labelledby="related-posts-heading">
+    <h2 id="related-posts-heading" class="related__title">Related writing</h2>
+    <div class="post-list post-list--compact">
+      {%- for p in related limit: 3 %}
+        {% include post-card.html post=p excerpt=false %}
+      {%- endfor %}
+    </div>
+  </aside>
+  {%- endif %}
+
+  <nav class="post-nav" aria-label="Adjacent posts">
+    {%- if page.previous %}
+    <a class="post-nav__link post-nav__link--prev" href="{{ page.previous.url | relative_url }}"><span class="post-nav__label">Older</span>{{ page.previous.title }}</a>
+    {%- else %}<span></span>{% endif %}
+    {%- if page.next %}
+    <a class="post-nav__link post-nav__link--next" href="{{ page.next.url | relative_url }}"><span class="post-nav__label">Newer</span>{{ page.next.title }}</a>
+    {%- endif %}
+  </nav>
+  <p class="back-link"><a href="{{ '/blog/' | relative_url }}">← All writing</a></p>
+</article>

@@ -1,0 +1,11 @@
+# Main navigation (header). `url` is relative to the site root; the templates
+# add the baseurl automatically. Order here = order on the site.
+main:
+  - title: Projects
+    url: /projects/
+  - title: Blog
+    url: /blog/
+  - title: About
+    url: /about/
+  - title: CV
+    url: /cv/

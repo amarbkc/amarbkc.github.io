@@ -1,0 +1,71 @@
+---
+layout: default
+---
+<div class="container">
+  <section class="intro" aria-labelledby="intro-name">
+    <div>
+      <h1 id="intro-name" class="intro__name">{{ site.author.name }}</h1>
+      <p class="intro__tagline">{{ site.author.tagline }}</p>
+      <div class="intro__body">
+        {{ content }}
+      </div>
+      <div class="intro__actions">
+        <a class="button button--primary" href="{{ '/projects/' | relative_url }}">Projects</a>
+        <a class="button" href="{{ '/blog/' | relative_url }}">Writing</a>
+        <a class="button" href="{{ '/about/' | relative_url }}">About</a>
+        <a class="button" href="{{ '/cv/' | relative_url }}">CV</a>
+      </div>
+    </div>
+
+    <aside>
+      <div class="aside-box">
+        <h2 class="aside-box__title">Interests</h2>
+        <ul class="interest-list">
+          {%- for item in site.data.profile.research_interests %}
+          <li>{{ item }}</li>
+          {%- endfor %}
+        </ul>
+      </div>
+      <div class="aside-box" id="contact">
+        <h2 class="aside-box__title">Contact</h2>
+        {% include contact-links.html %}
+        {%- if site.email == "" %}
+        <p class="notice notice--todo" style="margin-top: var(--s-3)"><strong>Placeholder:</strong> set <code>email</code> in <code>_config.yml</code> to show an email link.</p>
+        {%- endif %}
+      </div>
+    </aside>
+  </section>
+
+  {%- assign featured = site.projects | where: "featured", true | sort: "order" %}
+  <section class="section" aria-labelledby="featured-heading">
+    <div class="section__header">
+      <h2 id="featured-heading" class="section__title">Selected projects</h2>
+      <a class="section__more" href="{{ '/projects/' | relative_url }}">All projects →</a>
+    </div>
+    {%- if featured.size > 0 %}
+    <div class="card-grid">
+      {%- for p in featured limit: site.home.featured_projects %}
+        {% include project-card.html project=p %}
+      {%- endfor %}
+    </div>
+    {%- else %}
+    <div class="empty-state"><p>No featured projects yet. Add <code>featured: true</code> to a project's front matter.</p></div>
+    {%- endif %}
+  </section>
+
+  <section class="section" aria-labelledby="writing-heading">
+    <div class="section__header">
+      <h2 id="writing-heading" class="section__title">Recent writing</h2>
+      <a class="section__more" href="{{ '/blog/' | relative_url }}">All posts →</a>
+    </div>
+    {%- if site.posts.size > 0 %}
+    <div class="post-list">
+      {%- for post in site.posts limit: site.home.recent_posts %}
+        {% include post-card.html post=post %}
+      {%- endfor %}
+    </div>
+    {%- else %}
+    <div class="empty-state"><p>No posts yet.</p></div>
+    {%- endif %}
+  </section>
+</div>

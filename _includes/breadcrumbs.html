@@ -1,0 +1,10 @@
+{%- comment -%}
+  Usage: {% include breadcrumbs.html parent_title="Blog" parent_url="/blog/" %}
+{%- endcomment -%}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ '/' | relative_url }}">Home</a></li>
+    <li><a href="{{ include.parent_url | relative_url }}">{{ include.parent_title }}</a></li>
+    <li><span aria-current="page">{{ page.title | truncate: 48 }}</span></li>
+  </ol>
+</nav>

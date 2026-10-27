@@ -1,0 +1,39 @@
+---
+layout: default
+title: Projects
+description: Implementations of machine learning algorithms, data structures, and mathematical methods — built from first principles.
+permalink: /projects/
+---
+{%- comment -%}
+  Cards are generated from the Markdown files in _projects/.
+  Categories (and their order) come from _data/project_categories.yml.
+  Without JavaScript all cards are shown; with JavaScript the filter buttons
+  show one category at a time.
+{%- endcomment -%}
+{%- assign projects = site.projects | sort: "order" %}
+<div class="container">
+  <header class="page-header">
+    <h1 class="page-title">Projects</h1>
+    <p class="page-lead">Implementations built to understand how things work — each with the mathematics, design decisions, and honest notes on what is finished and what is not.</p>
+  </header>
+
+  <fieldset class="filters" data-project-filters>
+    <legend class="visually-hidden">Filter projects by category</legend>
+    <button type="button" class="filter-button" data-filter="all" aria-pressed="true">All<span class="filter-button__count">{{ projects.size }}</span></button>
+    {%- for cat in site.data.project_categories %}
+      {%- assign n = projects | where: "category", cat.name | size %}
+    <button type="button" class="filter-button" data-filter="{{ cat.slug }}" data-name="{{ cat.name }}" aria-pressed="false">{{ cat.name }}<span class="filter-button__count">{{ n }}</span></button>
+    {%- endfor %}
+  </fieldset>
+
+  <div class="card-grid" data-project-grid>
+    {%- for p in projects %}{% include project-card.html project=p %}{% endfor %}
+  </div>
+
+  {%- if projects.size == 0 %}
+  <div class="empty-state"><p>No projects yet. Add a Markdown file to <code>_projects/</code>.</p></div>
+  {%- endif %}
+  <div class="empty-state" data-filter-empty hidden>
+    <p>Nothing in <span data-filter-empty-name>this category</span> yet — projects in progress will appear here.</p>
+  </div>
+</div>

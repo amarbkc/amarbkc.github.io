@@ -1,0 +1,57 @@
+---
+layout: default
+title: Topics
+description: Blog posts grouped by category and tag.
+permalink: /blog/topics/
+---
+{%- assign categories = site.categories | sort %}
+{%- assign tags = site.tags | sort %}
+<div class="container container--narrow">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="{{ '/' | relative_url }}">Home</a></li>
+      <li><a href="{{ '/blog/' | relative_url }}">Blog</a></li>
+      <li><span aria-current="page">Topics</span></li>
+    </ol>
+  </nav>
+  <header class="page-header">
+    <h1 class="page-title">Topics</h1>
+    <p class="page-lead">Every post, grouped by category and by tag.</p>
+  </header>
+
+  <h2 class="section__title">Categories</h2>
+  <ul class="topic-index">
+    {%- for c in categories %}
+    <li><a class="tag tag--category" href="#{{ c[0] | slugify }}">{{ c[0] }} ({{ c[1].size }})</a></li>
+    {%- endfor %}
+  </ul>
+
+  <h2 class="section__title">Tags</h2>
+  <ul class="topic-index">
+    {%- for t in tags %}
+    <li><a class="tag" href="#tag-{{ t[0] | slugify }}">#{{ t[0] }} ({{ t[1].size }})</a></li>
+    {%- endfor %}
+  </ul>
+
+  {%- if categories.size == 0 and tags.size == 0 %}
+  <div class="empty-state"><p>No categories or tags yet.</p></div>
+  {%- endif %}
+
+  {%- for c in categories %}
+  <section class="year-group" id="{{ c[0] | slugify }}" aria-labelledby="h-{{ c[0] | slugify }}">
+    <h2 class="category-section__title" id="h-{{ c[0] | slugify }}">{{ c[0] }}</h2>
+    <div class="post-list post-list--compact">
+      {%- for post in c[1] %}{% include post-card.html post=post excerpt=false %}{% endfor %}
+    </div>
+  </section>
+  {%- endfor %}
+
+  {%- for t in tags %}
+  <section class="year-group" id="tag-{{ t[0] | slugify }}" aria-labelledby="h-tag-{{ t[0] | slugify }}">
+    <h2 class="category-section__title" id="h-tag-{{ t[0] | slugify }}">#{{ t[0] }}</h2>
+    <div class="post-list post-list--compact">
+      {%- for post in t[1] %}{% include post-card.html post=post excerpt=false %}{% endfor %}
+    </div>
+  </section>
+  {%- endfor %}
+</div>
