@@ -1,7 +1,6 @@
 ---
 title: "Linear Regression from Scratch"
 description: "Deriving least squares from first principles and solving it two ways — the normal equations and gradient descent — in NumPy."
-category: "Mathematics and Optimization"
 technologies:
   - Python
   - NumPy
@@ -138,5 +137,4 @@ number of the problem.
 ## Source code and resources
 
 - Source code: *add your repository link in the front matter.*
-- Related writing: [Linear Regression: Derivation and Implementation from Scratch]({% link _posts/2026-07-22-linear-regression-derivation.md %})
 - Reference: Hastie, Tibshirani, and Friedman, *The Elements of Statistical Learning*, Chapter 3.

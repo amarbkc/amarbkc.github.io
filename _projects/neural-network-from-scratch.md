@@ -1,7 +1,6 @@
 ---
 title: "Neural Network from Scratch"
 description: "A fully connected neural network in pure NumPy — linear layers, activations, backpropagation, and gradient descent derived and implemented by hand."
-category: "Machine Learning"
 technologies:
   - Python
   - NumPy
@@ -70,8 +69,7 @@ $$
 ### Backpropagation
 
 Applying the chain rule from the loss backwards gives the following
-gradients (derived in detail in the post on
-[backpropagation]({% link _posts/2026-08-14-backpropagation-chain-rule.md %})):
+gradients:
 
 $$
 \begin{aligned}
@@ -207,5 +205,4 @@ gradient; errors near $10^{-2}$ almost always indicate a bug.
 ## Source code and resources
 
 - Source code: *add your repository link in the front matter (`github_url`).*
-- Related writing: [Backpropagation: Understanding the Chain Rule in Neural Networks]({% link _posts/2026-08-14-backpropagation-chain-rule.md %})
 - Reference: Goodfellow, Bengio, and Courville, *Deep Learning*, Chapter 6.

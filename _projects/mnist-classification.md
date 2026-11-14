@@ -1,7 +1,6 @@
 ---
 title: "MNIST Handwritten Digit Classification"
 description: "Training a from-scratch neural network to classify handwritten digits, with a careful record of setup, metrics, and errors."
-category: "Deep Learning"
 technologies:
   - Python
   - NumPy
@@ -83,5 +82,4 @@ Suggested additions once you have results:
 
 - Source code: *add your repository link in the front matter.*
 - Dataset: Y. LeCun, C. Cortes, and C. J. C. Burges, *The MNIST database of handwritten digits.*
-- Related: [Neural Network from Scratch]({% link _projects/neural-network-from-scratch.md %}),
-  [Backpropagation]({% link _posts/2026-08-14-backpropagation-chain-rule.md %})
+- Related: [Neural Network from Scratch]({% link _projects/neural-network-from-scratch.md %})

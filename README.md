@@ -30,7 +30,7 @@ framework.
 | Markdown + YAML front matter | Your content (posts, projects, pages) |
 | Liquid | Template language in `_layouts/` and `_includes/` |
 | Custom CSS (`assets/css/style.css`) | All styling, light and dark themes |
-| Vanilla JS (`assets/js/main.js`) | Optional extras: theme toggle, mobile menu, project filter, blog search, copy buttons. The site works without it. |
+| Vanilla JS (`assets/js/main.js`) | Optional extras: theme toggle, mobile menu, blog search, copy buttons. The site works without it. |
 | MathJax 3 (CDN) | Renders LaTeX; loaded only on pages with `math: true` |
 | Rouge | Syntax highlighting at build time (no JavaScript) |
 | jekyll-feed, jekyll-seo-tag, jekyll-sitemap | RSS feed, meta/Open Graph tags, sitemap |
@@ -46,7 +46,7 @@ No analytics or tracking scripts are included.
 ├── _data/
 │   ├── navigation.yml       ← header menu
 │   ├── profile.yml          ← education, experience, skills (About + CV pages)
-│   └── project_categories.yml ← project categories and their order
+│   └── blog_categories.yml  ← blog topics and their order
 ├── _includes/               ← reusable HTML pieces (header, cards, …)
 ├── _layouts/                ← page templates (default, home, page, post, project)
 ├── _posts/                  ← blog posts: YYYY-MM-DD-title.md
@@ -57,11 +57,11 @@ No analytics or tracking scripts are included.
 │   ├── images/              ← images for posts and projects
 │   └── cv/                  ← put your CV PDF here
 ├── blog/index.html          ← blog listing (+ search)
-├── blog/topics.html         ← posts grouped by category and tag
+├── blog/topics.html         ← posts grouped by topic (and tag)
 ├── index.md                 ← home page introduction text
 ├── about.md                 ← About page
 ├── cv.md                    ← CV page
-├── projects.html            ← project listing (+ category filter)
+├── projects.html            ← project listing
 ├── 404.html
 ├── search.json              ← search index generated at build time
 ├── Gemfile / Gemfile.lock   ← Ruby dependencies
@@ -123,7 +123,6 @@ name becomes the URL: `/projects/k-means-clustering/`.
 ---
 title: "k-Means Clustering from Scratch"
 description: "One-sentence summary shown on the card."
-category: "Machine Learning"        # must match a name in _data/project_categories.yml
 technologies: [Python, NumPy]
 github_url: "https://github.com/USERNAME/k-means"   # or ""
 demo_url: ""                        # optional
@@ -142,9 +141,7 @@ order: 4                            # lower numbers are listed first
 ```
 
 All sections are optional. The card on the Projects page and the detail page
-are generated automatically. To add a new category, add it to
-`_data/project_categories.yml`; categories with no projects show an empty
-state.
+are generated automatically.
 
 The three starter projects contain clearly marked **"Starter content — please
 review"** notices. Replace the content with your own work and delete each
@@ -159,7 +156,7 @@ publication date; the URL becomes `/blog/YYYY/MM/short-title/`.
 ---
 title: "Understanding Binary Search Trees"
 summary: "One or two sentences used on listing pages, in search, and for link previews."
-categories: [Algorithms]            # broad topics (keep the set small)
+categories: [Data Structures and Algorithms]   # or [Mathematics] — see below
 tags: [trees, data-structures]      # specific keywords
 related_projects: []                # optional: project file names without .md
 math: true                          # default; set false to skip loading MathJax
@@ -179,20 +176,21 @@ The rest of the article…
 - Link to another post or project in a way that is checked at build time:
 
   ```markdown
-  [Dijkstra's algorithm]({% raw %}{% link _posts/2026-06-18-dijkstras-algorithm.md %}{% endraw %})
+  [An earlier post]({% raw %}{% link _posts/YYYY-MM-DD-short-title.md %}{% endraw %})
   [Neural network project]({% raw %}{% link _projects/neural-network-from-scratch.md %}{% endraw %})
   ```
 
   If the target file is renamed or deleted, the build fails with a clear
   error instead of publishing a broken link.
 
-Category and tag pages are combined at `/blog/topics/`. Related posts (sharing
-a category or tag) are shown at the end of each post automatically.
+The blog has two main topics, defined in `_data/blog_categories.yml`:
+**Mathematics** and **Data Structures and Algorithms**. Set a post's
+`categories` to one of those names (spelled exactly) and it appears under that
+topic at `/blog/topics/`; a topic with no posts shows "No articles yet". To add
+or rename a topic, edit `_data/blog_categories.yml`. Related posts (sharing a
+category or tag) are shown at the end of each post automatically.
 
-The five starter posts are complete drafts. Read them carefully before
-publishing under your name: edit the wording, check every derivation, and run
-the code examples yourself. Examples marked *illustrative* are not
-experimental results.
+The blog currently has no posts — `_posts/` is empty until you add one.
 
 ## 7. Math, code, and images
 

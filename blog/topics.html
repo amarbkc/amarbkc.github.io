@@ -1,10 +1,14 @@
 ---
 layout: default
 title: Topics
-description: Blog posts grouped by category and tag.
+description: Blog posts grouped by topic.
 permalink: /blog/topics/
 ---
-{%- assign categories = site.categories | sort %}
+{%- comment -%}
+  The main topics (and their order) come from _data/blog_categories.yml.
+  Each always gets a section, with a short message while it has no posts.
+  Tags appear below only once posts use them.
+{%- endcomment -%}
 {%- assign tags = site.tags | sort %}
 <div class="container container--narrow">
   <nav class="breadcrumbs" aria-label="Breadcrumb">
@@ -16,33 +20,37 @@ permalink: /blog/topics/
   </nav>
   <header class="page-header">
     <h1 class="page-title">Topics</h1>
-    <p class="page-lead">Every post, grouped by category and by tag.</p>
+    <p class="page-lead">Every post, grouped by topic.</p>
   </header>
 
-  <h2 class="section__title">Categories</h2>
-  <ul class="topic-index">
-    {%- for c in categories %}
-    <li><a class="tag tag--category" href="#{{ c[0] | slugify }}">{{ c[0] }} ({{ c[1].size }})</a></li>
+  <ul class="topic-index" aria-label="Topics">
+    {%- for cat in site.data.blog_categories %}
+      {%- assign n = site.categories[cat.name] | size %}
+    <li><a class="tag tag--category" href="#{{ cat.name | slugify }}">{{ cat.name }} ({{ n }})</a></li>
     {%- endfor %}
   </ul>
 
+  {%- if tags.size > 0 %}
   <h2 class="section__title">Tags</h2>
   <ul class="topic-index">
     {%- for t in tags %}
     <li><a class="tag" href="#tag-{{ t[0] | slugify }}">#{{ t[0] }} ({{ t[1].size }})</a></li>
     {%- endfor %}
   </ul>
-
-  {%- if categories.size == 0 and tags.size == 0 %}
-  <div class="empty-state"><p>No categories or tags yet.</p></div>
   {%- endif %}
 
-  {%- for c in categories %}
-  <section class="year-group" id="{{ c[0] | slugify }}" aria-labelledby="h-{{ c[0] | slugify }}">
-    <h2 class="category-section__title" id="h-{{ c[0] | slugify }}">{{ c[0] }}</h2>
+  {%- for cat in site.data.blog_categories %}
+  {%- assign slug = cat.name | slugify %}
+  {%- assign posts = site.categories[cat.name] %}
+  <section class="year-group" id="{{ slug }}" aria-labelledby="h-{{ slug }}">
+    <h2 class="category-section__title" id="h-{{ slug }}">{{ cat.name }}</h2>
+    {%- if posts and posts.size > 0 %}
     <div class="post-list post-list--compact">
-      {%- for post in c[1] %}{% include post-card.html post=post excerpt=false %}{% endfor %}
+      {%- for post in posts %}{% include post-card.html post=post excerpt=false %}{% endfor %}
     </div>
+    {%- else %}
+    <div class="empty-state"><p>No articles yet.</p></div>
+    {%- endif %}
   </section>
   {%- endfor %}
 

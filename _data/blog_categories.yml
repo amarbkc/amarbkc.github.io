@@ -1,0 +1,7 @@
+# Blog categories (the main topics), in display order.
+# A post joins a category when its front matter lists the `name` exactly, e.g.
+#   categories: [Mathematics]
+#   categories: [Data Structures and Algorithms]
+# Categories with no posts still appear and show a "no articles yet" message.
+- name: Mathematics
+- name: Data Structures and Algorithms

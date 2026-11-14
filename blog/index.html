@@ -1,20 +1,28 @@
 ---
 layout: default
 title: Blog
-description: Long-form notes on algorithms, mathematics, machine learning, and computer science.
+description: Long-form notes on mathematics and on data structures and algorithms.
 permalink: /blog/
 ---
 <div class="container container--narrow">
   <header class="page-header">
     <h1 class="page-title">Writing</h1>
-    <p class="page-lead">Long-form notes on algorithms, mathematics, and machine learning — derivations, proofs of correctness, and implementations.</p>
+    <p class="page-lead">Long-form notes on mathematics and on data structures and algorithms — derivations, proofs of correctness, and implementations.</p>
     <p class="article-meta"><a href="{{ '/blog/topics/' | relative_url }}">Browse by topic</a> <span aria-hidden="true">·</span> <a href="{{ '/feed.xml' | relative_url }}">RSS feed</a></p>
   </header>
+
+  {%- comment -%} Main topics come from _data/blog_categories.yml. {%- endcomment %}
+  <ul class="topic-index" aria-label="Topics">
+    {%- for cat in site.data.blog_categories %}
+      {%- assign n = site.categories[cat.name] | size %}
+    <li><a class="tag tag--category" href="{{ '/blog/topics/' | relative_url }}#{{ cat.name | slugify }}">{{ cat.name }} ({{ n }})</a></li>
+    {%- endfor %}
+  </ul>
 
   {%- comment -%} Search is revealed by main.js; without JS the full list is shown. {%- endcomment %}
   <div class="search" data-search="{{ '/search.json' | relative_url }}" role="search" hidden>
     <label class="search__label" for="search-input">Search posts</label>
-    <input class="search__input" id="search-input" type="search" placeholder="e.g. gradient, union-find, complexity" autocomplete="off">
+    <input class="search__input" id="search-input" type="search" placeholder="Search by title, topic, or keyword" autocomplete="off">
     <p class="search__status" aria-live="polite"></p>
   </div>
 
@@ -22,7 +30,7 @@ permalink: /blog/
 
   <div data-post-listing>
     {%- if site.posts.size == 0 %}
-    <div class="empty-state"><p>No posts yet. Add a Markdown file to <code>_posts/</code>.</p></div>
+    <div class="empty-state"><p>No articles yet.</p></div>
     {%- endif %}
     {%- assign by_year = site.posts | group_by_exp: "p", "p.date | date: '%Y'" %}
     {%- for year in by_year %}

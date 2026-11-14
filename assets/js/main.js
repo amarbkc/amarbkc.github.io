@@ -67,40 +67,6 @@
     block.appendChild(button);
   });
 
-  /* Project category filter ------------------------------------------------------ */
-  var filters = document.querySelector("[data-project-filters]");
-  if (filters) {
-    var cards = document.querySelectorAll("[data-project-grid] [data-category]");
-    var buttons = filters.querySelectorAll("button[data-filter]");
-    var empty = document.querySelector("[data-filter-empty]");
-    var applyFilter = function (slug) {
-      var shown = 0;
-      buttons.forEach(function (b) {
-        var active = b.getAttribute("data-filter") === slug;
-        b.setAttribute("aria-pressed", String(active));
-        if (active && empty) {
-          empty.querySelector("[data-filter-empty-name]").textContent = b.getAttribute("data-name") || "this category";
-        }
-      });
-      cards.forEach(function (c) {
-        var match = slug === "all" || c.getAttribute("data-category") === slug;
-        c.hidden = !match;
-        if (match) shown++;
-      });
-      if (empty) empty.hidden = shown > 0 || slug === "all";
-    };
-    buttons.forEach(function (b) {
-      b.addEventListener("click", function () {
-        var slug = b.getAttribute("data-filter");
-        applyFilter(slug);
-        if (history.replaceState) history.replaceState(null, "", slug === "all" ? location.pathname : "#" + slug);
-      });
-    });
-    var initial = location.hash.slice(1);
-    var valid = Array.prototype.some.call(buttons, function (b) { return b.getAttribute("data-filter") === initial; });
-    applyFilter(valid ? initial : "all");
-  }
-
   /* Blog search (client-side, over /search.json) ---------------------------------- */
   var search = document.querySelector("[data-search]");
   if (search && window.fetch) {
