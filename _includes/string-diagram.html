@@ -1,0 +1,73 @@
+{%- comment -%}
+  A row of character cells, optionally with a second string aligned under it.
+  Used for string-algorithm diagrams (alignments, prefix-function tables).
+
+  Usage:
+    {% include string-diagram.html text="ababcab" pattern="abd" offset=2
+       kept=0 matched=2 miss=true caption="…" %}
+
+  text           the top string (required)
+  pattern        a second string drawn underneath, shifted right by `offset` cells
+  kept           leading pattern characters already known to match (not re-compared)
+  matched        further pattern characters compared in this alignment and found equal
+  miss           true when the next pattern character is a mismatch
+  values         comma-separated numbers shown under `text` (e.g. a prefix function)
+  text_label / pattern_label / values_label   row labels (default T / P / π)
+  size           "sm" for narrower cells (long strings)
+  caption        figure caption (HTML allowed; $…$ math works)
+  alt            plain-text description for screen readers (defaults to the caption)
+{%- endcomment -%}
+{%- assign t = include.text | split: "" -%}
+{%- assign p = include.pattern | default: "" | split: "" -%}
+{%- assign off = include.offset | default: 0 | plus: 0 -%}
+{%- assign kept = include.kept | default: 0 | plus: 0 -%}
+{%- assign matched = include.matched | default: 0 | plus: 0 -%}
+{%- assign known = kept | plus: matched -%}
+{%- assign missi = -1 -%}
+{%- if include.miss -%}{%- assign missi = known -%}{%- endif -%}
+{%- assign vals = include.values | default: "" | split: "," -%}
+{%- assign alt = include.alt | default: include.caption | strip_html | replace: "$", "" -%}
+<figure class="strfig{% if include.size == 'sm' %} strfig--sm{% endif %}">
+<div class="strfig__scroll" role="img" aria-label="{{ alt | escape }}"{% if t.size > 16 %} tabindex="0"{% endif %}>
+<div class="strfig__grid" aria-hidden="true">
+<div class="strfig__row strfig__row--index"><span class="strfig__label"></span>
+{%- for c in t -%}<span class="strfig__cell">{{ forloop.index0 }}</span>{%- endfor -%}
+</div>
+<div class="strfig__row"><span class="strfig__label">{{ include.text_label | default: "T" }}</span>
+{%- for c in t -%}
+  {%- assign pj = forloop.index0 | minus: off -%}
+  {%- assign state = "" -%}
+  {%- if p.size > 0 and pj >= 0 -%}
+    {%- if pj < kept -%}{%- assign state = " is-kept" -%}
+    {%- elsif pj < known -%}{%- assign state = " is-match" -%}
+    {%- elsif pj == missi -%}{%- assign state = " is-miss" -%}
+    {%- endif -%}
+  {%- endif -%}
+  <span class="strfig__cell{{ state }}">{{ c | escape }}</span>
+{%- endfor -%}
+</div>
+{%- if p.size > 0 %}
+<div class="strfig__row"><span class="strfig__label">{{ include.pattern_label | default: "P" }}</span>
+{%- for i in (1..off) -%}{%- if off > 0 -%}<span class="strfig__cell strfig__cell--blank"></span>{%- endif -%}{%- endfor -%}
+{%- for c in p -%}
+  {%- assign pj = forloop.index0 -%}
+  {%- assign state = "" -%}
+  {%- if pj < kept -%}{%- assign state = " is-kept" -%}
+  {%- elsif pj < known -%}{%- assign state = " is-match" -%}
+  {%- elsif pj == missi -%}{%- assign state = " is-miss" -%}
+  {%- endif -%}
+  <span class="strfig__cell{{ state }}">{{ c | escape }}</span>
+{%- endfor -%}
+</div>
+{%- endif %}
+{%- if vals.size > 0 %}
+<div class="strfig__row strfig__row--values"><span class="strfig__label">{{ include.values_label | default: "π" }}</span>
+{%- for v in vals -%}<span class="strfig__cell">{{ v | strip }}</span>{%- endfor -%}
+</div>
+{%- endif %}
+</div>
+</div>
+{%- if include.caption %}
+<figcaption>{{ include.caption }}</figcaption>
+{%- endif %}
+</figure>
