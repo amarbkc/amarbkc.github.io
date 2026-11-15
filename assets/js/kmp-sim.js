@@ -99,14 +99,14 @@
       '<div class="strfig__grid" aria-hidden="true">' +
         '<div class="strfig__row strfig__row--index" data-row="index"><span class="strfig__label"></span>' + cells(idx) + "</div>" +
         '<div class="strfig__row" data-row="text"><span class="strfig__label">T</span>' + cells(T.split("")) + "</div>" +
-        '<div class="strfig__row"><span class="strfig__label">P</span><span class="kmpsim__slide" data-row="pattern">' + cells(P.split("")) + "</span></div>" +
-        '<div class="strfig__row strfig__row--values"><span class="strfig__label">lps</span><span class="kmpsim__slide" data-row="lps">' + cells(lps) + "</span></div>" +
+        '<div class="strfig__row"><span class="strfig__label">P</span><span class="stepsim__slide" data-row="pattern">' + cells(P.split("")) + "</span></div>" +
+        '<div class="strfig__row strfig__row--values"><span class="strfig__label">lps</span><span class="stepsim__slide" data-row="lps">' + cells(lps) + "</span></div>" +
       "</div>";
 
     var q = function (sel) { return root.querySelector(sel); };
     var rowCells = function (name) { return root.querySelectorAll('[data-row="' + name + '"] > .strfig__cell'); };
     var indexCells = rowCells("index"), textCells = rowCells("text"), patCells = rowCells("pattern"), lpsCells = rowCells("lps");
-    var slides = root.querySelectorAll(".kmpsim__slide");
+    var slides = root.querySelectorAll(".stepsim__slide");
     var msg = q("[data-sim-msg]"), counter = q("[data-sim-counter]"), readout = q("[data-sim-readout]"), result = q("[data-sim-result]");
     var prev = q("[data-sim-prev]"), next = q("[data-sim-next]"), play = q("[data-sim-play]"), reset = q("[data-sim-reset]");
     var at = 0, timer = null;

@@ -1,0 +1,37 @@
+{%- comment -%}
+  Interactive, step-through palindrome simulations (assets/js/palindrome-sim.js).
+  Usage: {% include palindrome-simulation.html mode="expand"   text="babad" caption="…" %}
+         {% include palindrome-simulation.html mode="manacher" text="ababa" caption="…" %}
+  Without JavaScript the reader sees the note inside <noscript>.
+  The script guards against running twice when a page has several simulations.
+{%- endcomment -%}
+{%- assign mode = include.mode | default: "expand" -%}
+<figure class="stepsim stepsim--tall strfig" data-palindrome-sim="{{ mode }}" data-text="{{ include.text | escape }}">
+<div class="strfig__scroll" data-sim-stage></div>
+<p class="stepsim__readout" data-sim-readout></p>
+<p class="stepsim__msg" data-sim-msg aria-live="polite"></p>
+<p class="stepsim__result" data-sim-result hidden></p>
+<div class="stepsim__controls">
+<button type="button" class="button" data-sim-prev>Previous</button>
+<button type="button" class="button" data-sim-next>Next</button>
+<button type="button" class="button" data-sim-play>Play</button>
+<button type="button" class="button" data-sim-reset>Restart</button>
+<span class="stepsim__counter" data-sim-counter></span>
+</div>
+<ul class="strfig__legend" aria-label="Legend">
+{%- if mode == "manacher" %}
+<li><span class="strfig__cell is-kept">a</span> known palindrome around c</li>
+<li><span class="strfig__cell is-match">a</span> palindrome around i</li>
+<li><span class="strfig__cell is-miss">a</span> mismatch</li>
+<li><span class="strfig__cell is-mirror">a</span> mirror of i</li>
+{%- else %}
+<li><span class="strfig__cell is-match">a</span> palindrome so far</li>
+<li><span class="strfig__cell is-miss">a</span> mismatch</li>
+{%- endif %}
+</ul>
+<noscript><p class="stepsim__msg">This step-through simulation needs JavaScript. The run on <code>{{ include.text | escape }}</code> is described in the text around it.</p></noscript>
+{%- if include.caption %}
+<figcaption>{{ include.caption }}</figcaption>
+{%- endif %}
+</figure>
+<script src="{{ '/assets/js/palindrome-sim.js' | relative_url }}" defer></script>

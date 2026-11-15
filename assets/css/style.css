@@ -749,28 +749,29 @@ a.tag:hover { color: var(--accent); border-color: var(--accent); }
   .strfig__label { width: 1.25rem; font-size: var(--text-sm); }
 }
 
-/* KMP step-through simulation (_includes/kmp-simulation.html, assets/js/kmp-sim.js) */
-.kmpsim {
+/* Step-through simulations (_includes/kmp-simulation.html, _includes/palindrome-simulation.html
+   and their scripts in assets/js/) */
+.stepsim {
   padding: var(--s-5) var(--s-4);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--bg-raised);
 }
-.kmpsim:not(.is-ready) > :not(noscript) { display: none; }
-.kmpsim .strfig__label { width: 2rem; }
-.kmpsim .strfig__scroll { overflow-y: hidden; }
-.kmpsim .strfig__row--values .strfig__label { font-family: var(--font-sans); font-style: normal; font-size: var(--text-xs); }
-.kmpsim__slide {
+.stepsim:not(.is-ready) > :not(noscript) { display: none; }
+.stepsim .strfig__label { width: 2rem; }
+.stepsim .strfig__scroll { overflow-y: hidden; }
+.stepsim .strfig__row--values .strfig__label { font-family: var(--font-sans); font-style: normal; font-size: var(--text-xs); }
+.stepsim__slide {
   display: flex;
   flex: none;
   width: max-content;
   transform: translateX(calc(var(--off, 0) * (var(--cell) - 1px)));
   transition: transform 350ms ease;
 }
-.kmpsim .strfig__cell { transition: background-color var(--transition), color var(--transition); }
-.kmpsim .strfig__row--index .is-cur { color: var(--text); font-weight: 700; box-shadow: inset 0 -2px 0 var(--text); }
-.kmpsim .strfig__row--values .is-ref { font-weight: 700; box-shadow: inset 0 0 0 1.5px var(--text); border-radius: 3px; }
-.kmpsim__readout {
+.stepsim .strfig__cell { transition: background-color var(--transition), color var(--transition); }
+.stepsim .strfig__row--index .is-cur { color: var(--text); font-weight: 700; box-shadow: inset 0 -2px 0 var(--text); }
+.stepsim .strfig__row--values .is-ref { font-weight: 700; box-shadow: inset 0 0 0 1.5px var(--text); border-radius: 3px; }
+.stepsim__readout {
   margin: var(--s-4) 0 0;
   font-family: var(--font-mono);
   font-size: var(--text-sm);
@@ -778,7 +779,7 @@ a.tag:hover { color: var(--accent); border-color: var(--accent); }
   text-align: center;
   white-space: pre-wrap;
 }
-.kmpsim__msg {
+.stepsim__msg {
   min-height: 5.2em;
   margin: var(--s-3) auto 0;
   max-width: 34rem;
@@ -787,7 +788,7 @@ a.tag:hover { color: var(--accent); border-color: var(--accent); }
   line-height: 1.55;
   text-align: center;
 }
-.kmpsim__result {
+.stepsim__result {
   width: max-content;
   max-width: 100%;
   margin: 0 auto var(--s-4);
@@ -797,18 +798,31 @@ a.tag:hover { color: var(--accent); border-color: var(--accent); }
   font-size: var(--text-sm);
   font-weight: 600;
 }
-.kmpsim__result[hidden] { display: block; visibility: hidden; }
-.kmpsim__controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--s-2); }
-.kmpsim__controls .button { font-family: var(--font-sans); cursor: pointer; }
-.kmpsim__controls .button:hover:not(:disabled) { border-color: var(--text); color: var(--text); }
-.kmpsim__controls .button:disabled { opacity: 0.45; cursor: default; }
-.kmpsim__counter { flex-basis: 100%; text-align: center; font-family: var(--font-sans); font-size: var(--text-xs); color: var(--text-muted); }
-.kmpsim .strfig__legend { margin-top: var(--s-4); }
+.stepsim__result[hidden] { display: block; visibility: hidden; }
+.stepsim__controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--s-2); }
+.stepsim__controls .button { font-family: var(--font-sans); cursor: pointer; }
+.stepsim__controls .button:hover:not(:disabled) { border-color: var(--text); color: var(--text); }
+.stepsim__controls .button:disabled { opacity: 0.45; cursor: default; }
+.stepsim__counter { flex-basis: 100%; text-align: center; font-family: var(--font-sans); font-size: var(--text-xs); color: var(--text-muted); }
+.stepsim .strfig__legend { margin-top: var(--s-4); }
 @media (max-width: 36rem) {
-  .kmpsim { padding: var(--s-4) var(--s-2); }
-  .kmpsim .strfig__label { width: 1.25rem; }
-  .kmpsim .strfig__row--values .strfig__label { font-size: 0.6875rem; }
-  .kmpsim__msg { min-height: 7.8em; font-size: var(--text-sm); }
+  .stepsim { padding: var(--s-4) var(--s-2); }
+  .stepsim .strfig__label { width: 1.25rem; }
+  .stepsim .strfig__row--values .strfig__label { font-size: 0.6875rem; }
+  .stepsim__msg { min-height: 7.8em; font-size: var(--text-sm); }
+}
+
+.stepsim .strfig__row:not(.strfig__row--index):not(.strfig__row--values) .is-cur { outline: 2px solid var(--text); outline-offset: -2px; position: relative; z-index: 1; }
+.stepsim .strfig__row:not(.strfig__row--index):not(.strfig__row--values) .is-mirror { outline: 2px dashed var(--text-muted); outline-offset: -2px; position: relative; z-index: 1; }
+.stepsim .stepsim__marks .strfig__cell { min-height: 1.3em; font-family: var(--font-serif); font-style: italic; font-size: var(--text-sm); white-space: nowrap; }
+.stepsim--tall .stepsim__msg { min-height: 6.8em; }
+.stepsim__msg code { white-space: nowrap; }
+.strfig__legend .strfig__cell.is-cur { outline: 2px solid var(--text); outline-offset: -2px; }
+.strfig__legend .strfig__cell.is-mirror { outline: 2px dashed var(--text-muted); outline-offset: -2px; }
+@media (max-width: 36rem) {
+  .stepsim--tall .stepsim__msg { min-height: 11em; }
+  .stepsim__msg code { white-space: normal; }
+  .stepsim .stepsim__marks .strfig__cell { font-size: 0.6875rem; }
 }
 
 /* MathJax: long display equations scroll instead of overflowing the page. */
@@ -1093,7 +1107,7 @@ mjx-container:focus-visible { outline: 2px solid var(--focus); }
   }
   body { font-size: 11pt; }
   .site-header, .site-footer, .skip-link, .breadcrumbs, .post-nav, .back-link,
-  .related, .theme-toggle, .nav-toggle, .copy-button, .filters, .search, .kmpsim__controls, .no-print { display: none !important; }
+  .related, .theme-toggle, .nav-toggle, .copy-button, .filters, .search, .stepsim__controls, .no-print { display: none !important; }
   .site-main { padding: 0; }
   .container { max-width: none; padding: 0; }
   .prose { font-size: 11pt; line-height: 1.5; }
